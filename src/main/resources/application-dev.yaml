@@ -1,6 +1,7 @@
 spring:
   application:
     name: Titan-API-Java
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -12,3 +13,6 @@ spring:
     port: ${RABBITMQ_PORT}
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
