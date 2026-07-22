@@ -22,7 +22,7 @@ public class TokenConfig {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.create()
-                    .withClaim("userId", user.getId())
+                    .withClaim("id", user.getId())
                     .withSubject(String.valueOf(user.getOneId()))
                     .withExpiresAt(genExpirationDate())
                     .withIssuedAt(Instant.now())
@@ -41,7 +41,7 @@ public class TokenConfig {
                     .verify(token);
 
             return Optional.of(JWTUserData.builder()
-                    .userId(decode.getClaim("id").asLong())
+                    .userId(decode.getClaim("id").asInt())
                     .name(decode.getClaim("name").asString())
                     .build()
             );
@@ -49,7 +49,6 @@ public class TokenConfig {
         catch (JWTVerificationException ex) {
             return Optional.empty();
         }
-
     }
 
     private Instant genExpirationDate() {

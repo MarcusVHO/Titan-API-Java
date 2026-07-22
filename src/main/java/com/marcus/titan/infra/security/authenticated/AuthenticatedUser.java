@@ -1,4 +1,4 @@
 package com.marcus.titan.infra.security.authenticated;
 
-public record AuthenticatedUser(Long id, String name) {
+public record AuthenticatedUser(Integer id, String name) {
 }

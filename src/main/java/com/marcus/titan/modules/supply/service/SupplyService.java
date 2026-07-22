@@ -1,7 +1,7 @@
 package com.marcus.titan.modules.supply.service;
 
-import org.springframework.stereotype.Service;
+import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
 
-@Service
-public class SupplyService {
+public interface SupplyService {
+    public void createMaterialRequest(Integer userId, MaterialRequest request);
 }

@@ -1,5 +1,6 @@
 package com.marcus.titan.modules.supply.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcus.titan.modules.supply.enums.SupplyStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,13 +16,13 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Supply {
 
-    public Supply(Long su, Long sku, String module, SupplyStatus status, Long userId) {
+    public Supply(String su, String module, Integer userId) {
         this.su = su;
-        this.sku = sku;
         this.module = module;
-        this.status = status;
+        this.status = SupplyStatus.PENDING_REQUEST;
         this.createdBy = userId;
         this.movements = new SupplyMoving();
+        this.movements.setSupply(this);
     }
 
     @Id
@@ -29,22 +30,23 @@ public class Supply {
     private Long id;
 
     //su é identidade do palete
-    private Long su;
+    private String su;
 
     //SKU codigo material
-    private Long sku;
+    private String sku;
 
     private String module;
 
     private SupplyStatus status;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "supply")
+    @JsonManagedReference
     private SupplyMoving movements;
 
     @CreationTimestamp
     private Instant createdAt;
 
-    private Long createdBy;
+    private Integer createdBy;
 
 
 
