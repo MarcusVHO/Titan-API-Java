@@ -1,0 +1,33 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  app:
+    build: .
+    container_name: "titan-api-java"
+
+
+
+    depends_on:
+      - rabbitmq
+
+    ports:
+      - "8081:8081"
+
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: titan_user
+      RABBITMQ_PASSWORD: titan_password
