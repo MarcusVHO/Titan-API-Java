@@ -1,6 +1,7 @@
 package com.marcus.titan.modules.supply.messaging.producer;
 
 import com.marcus.titan.infra.messaging.RabbitConfig;
+import com.marcus.titan.modules.supply.dto.message.MaterialRequestMessage;
 import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class SapProducer {
     }
 
 
-    public void sendMaterialRequest (MaterialRequest request) {
+    public void sendMaterialRequest (MaterialRequestMessage request) {
         rabbitTemplate.convertAndSend(
                 RabbitConfig.EXCHANGE_NAME,
                 RabbitConfig.EXECUTE_ROUTING_KEY,

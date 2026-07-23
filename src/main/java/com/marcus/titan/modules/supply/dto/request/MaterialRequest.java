@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record MaterialRequest (
         @NotBlank String module,
-        @NotNull String su
+        @NotNull String sku
 ) {
 }

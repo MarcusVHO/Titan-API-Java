@@ -1,5 +1,6 @@
 package com.marcus.titan.modules.supply.service.impl;
 
+import com.marcus.titan.modules.supply.dto.message.MaterialResponseMessage;
 import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
 import com.marcus.titan.modules.supply.entity.Supply;
 import com.marcus.titan.modules.supply.mapper.SupplyMapper;
@@ -23,11 +24,19 @@ public class SupplyServiceImpl implements SupplyService {
     @Override
     public void createMaterialRequest(Integer userId, MaterialRequest request) {
         Supply supply = new Supply(
-                request.su(),
+                request.sku(),
                 request.module(),
                 userId
         );
         supplyRepository.save(supply);
-        producer.sendMaterialRequest(request);
+        producer.sendMaterialRequest(mapper.toMaterialRequestMessage(supply));
+    }
+
+    @Override
+    public void processMaterialResponse(MaterialResponseMessage message) {
+        Supply materialEntity = supplyRepository.findById(message.id()).orElse(null);
+        assert materialEntity != null;
+        materialEntity.updateFromMaterialMessage(message);
+
     }
 }

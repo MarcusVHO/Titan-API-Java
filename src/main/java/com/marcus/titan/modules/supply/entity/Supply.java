@@ -1,8 +1,10 @@
 package com.marcus.titan.modules.supply.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.marcus.titan.modules.supply.dto.message.MaterialResponseMessage;
 import com.marcus.titan.modules.supply.enums.SupplyStatus;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,10 +18,9 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Supply {
 
-    public Supply(String su, String module, Integer userId) {
-        this.su = su;
+    public Supply(String sku, String module, Integer userId) {
+        this.sku = sku;
         this.module = module;
-        this.status = SupplyStatus.PENDING_REQUEST;
         this.createdBy = userId;
         this.movements = new SupplyMoving();
         this.movements.setSupply(this);
@@ -33,11 +34,20 @@ public class Supply {
     private String su;
 
     //SKU codigo material
+    @Column(length = 50, nullable = false)
     private String sku;
 
+    @Column(length = 10, nullable = false)
     private String module;
 
-    private SupplyStatus status;
+    @Column(length = 12, name = "wh_pos")
+    private String WHPos;
+
+    private Double quantity;
+
+    private String batch;
+
+    private SupplyStatus status = SupplyStatus.PENDING_REQUEST;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "supply")
     @JsonManagedReference
@@ -48,6 +58,18 @@ public class Supply {
 
     private Integer createdBy;
 
+
+    @Transactional
+    public void updateFromMaterialMessage(MaterialResponseMessage message) {
+        this.su = message.su();
+        this.WHPos = message.position();
+        this.quantity = message.quantity();
+        if (!message.batch().isBlank()) {
+            this.batch = message.batch();
+        }
+        this.movements.setSolicitedAt(Instant.now());
+
+    }
 
 
 
