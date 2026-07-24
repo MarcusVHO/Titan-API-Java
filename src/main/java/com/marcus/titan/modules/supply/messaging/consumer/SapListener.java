@@ -16,7 +16,6 @@ public class SapListener {
 
     @RabbitListener(queues = RabbitConfig.RESPONSE_QUEUE)
     public void receive(MaterialResponseMessage message) {
-        System.out.println("Received Message: " + message);
         supplyService.processMaterialResponse(message);
     }
 }

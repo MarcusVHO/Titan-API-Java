@@ -8,7 +8,6 @@ import com.marcus.titan.modules.supply.mapper.SupplyMapper;
 import com.marcus.titan.modules.supply.messaging.producer.SapProducer;
 import com.marcus.titan.modules.supply.repository.SupplyRepository;
 import com.marcus.titan.modules.supply.service.SupplyService;
-import org.hibernate.query.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

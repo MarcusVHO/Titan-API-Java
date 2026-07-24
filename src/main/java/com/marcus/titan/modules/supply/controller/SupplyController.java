@@ -1,18 +1,14 @@
 package com.marcus.titan.modules.supply.controller;
 
-
 import com.marcus.titan.infra.security.authenticated.AuthenticatedUser;
 import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
 import com.marcus.titan.modules.supply.dto.response.SapResponse;
 import com.marcus.titan.modules.supply.service.SupplyService;
-import com.marcus.titan.modules.user.entity.User;
 import jakarta.validation.Valid;
-import org.hibernate.query.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
