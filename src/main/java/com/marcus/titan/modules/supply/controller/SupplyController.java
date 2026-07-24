@@ -36,6 +36,7 @@ public class SupplyController {
         return ResponseEntity.ok(supplyService.getMaterials(pageable));
     }
 
+
     @PostMapping("/claim")
     public ResponseEntity<Void> claimMaterial() {
         return ResponseEntity.ok().build();
