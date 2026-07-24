@@ -64,11 +64,11 @@ public class Supply {
         this.su = message.su();
         this.WHPos = message.position();
         this.quantity = message.quantity();
-        if (!message.batch().isBlank()) {
+        if (message.batch() != null ) {
             this.batch = message.batch();
         }
         this.movements.setSolicitedAt(Instant.now());
-
+        this.status = SupplyStatus.REQUESTED;
     }
 
 

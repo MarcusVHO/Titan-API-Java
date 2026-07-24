@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface SupplyMapper {
+    @Mapping(source = "WHPos", target = "position")
     SapResponse toSapResponse(Supply supply);
 
     MaterialRequestMessage toMaterialRequestMessage(Supply supply);

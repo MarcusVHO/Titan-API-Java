@@ -29,6 +29,7 @@ public class SupplyServiceImpl implements SupplyService {
     public void createMaterialRequest(Integer userId, MaterialRequest request) {
         Supply supply = new Supply(
                 request.sku(),
+
                 request.module(),
                 userId
         );
@@ -41,6 +42,7 @@ public class SupplyServiceImpl implements SupplyService {
         Supply materialEntity = supplyRepository.findById(message.id()).orElse(null);
         assert materialEntity != null;
         materialEntity.updateFromMaterialMessage(message);
+        supplyRepository.save(materialEntity);
 
     }
 
