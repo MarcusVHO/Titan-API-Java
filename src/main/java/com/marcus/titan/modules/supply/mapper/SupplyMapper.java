@@ -4,12 +4,10 @@ import com.marcus.titan.modules.supply.dto.message.MaterialRequestMessage;
 import com.marcus.titan.modules.supply.dto.response.SapResponse;
 import com.marcus.titan.modules.supply.entity.Supply;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface SupplyMapper {
-    @Mapping(source = "WHPos", target = "position")
     SapResponse toSapResponse(Supply supply);
 
     MaterialRequestMessage toMaterialRequestMessage(Supply supply);

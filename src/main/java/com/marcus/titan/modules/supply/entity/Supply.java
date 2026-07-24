@@ -41,12 +41,14 @@ public class Supply {
     private String module;
 
     @Column(length = 12, name = "wh_pos")
-    private String WHPos;
+    private String position;
 
     private Double quantity;
 
     private String batch;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private SupplyStatus status = SupplyStatus.PENDING_REQUEST;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "supply")
@@ -56,13 +58,15 @@ public class Supply {
     @CreationTimestamp
     private Instant createdAt;
 
+    @Column(nullable = false)
     private Integer createdBy;
 
 
-    @Transactional
+
+
     public void updateFromMaterialMessage(MaterialResponseMessage message) {
         this.su = message.su();
-        this.WHPos = message.position();
+        this.position = message.position();
         this.quantity = message.quantity();
         if (message.batch() != null ) {
             this.batch = message.batch();

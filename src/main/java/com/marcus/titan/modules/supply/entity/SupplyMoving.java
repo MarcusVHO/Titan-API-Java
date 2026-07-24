@@ -22,8 +22,10 @@ public class SupplyMoving {
 
     private Instant solicitedAt;
 
-    private Instant pickingAt;
     private Long  pickedBy;
+    private Instant claimedAt;
+    private Instant pickingAt;
+    private Instant bufferAt;
 
     private Instant suppliedAt;
     private Long  suppliedBy;

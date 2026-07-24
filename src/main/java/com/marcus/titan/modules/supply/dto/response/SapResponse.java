@@ -10,6 +10,7 @@ public record SapResponse (
         String sku,
         String module,
         String position,
+        Double quantity,
         SupplyStatus status,
         Instant createdAt
 ){

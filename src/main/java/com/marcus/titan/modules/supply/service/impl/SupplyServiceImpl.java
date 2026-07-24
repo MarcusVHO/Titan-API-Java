@@ -29,7 +29,6 @@ public class SupplyServiceImpl implements SupplyService {
     public void createMaterialRequest(Integer userId, MaterialRequest request) {
         Supply supply = new Supply(
                 request.sku(),
-
                 request.module(),
                 userId
         );
