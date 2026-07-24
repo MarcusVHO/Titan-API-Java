@@ -2,10 +2,12 @@ package com.marcus.titan.modules.supply.controller;
 
 import com.marcus.titan.infra.security.authenticated.AuthenticatedUser;
 import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
+import com.marcus.titan.modules.supply.dto.response.MaterialClaimResponse;
 import com.marcus.titan.modules.supply.dto.response.SapResponse;
 import com.marcus.titan.modules.supply.service.SupplyService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,16 @@ public class SupplyController {
     }
 
     @PostMapping("/claim")
-    public ResponseEntity<Void> claimMaterial() {
+    public ResponseEntity<MaterialClaimResponse> claimMaterial(@AuthenticationPrincipal AuthenticatedUser user) {
+        return ResponseEntity.ok().body(supplyService.claimNextMaterial(user.id()));
+    }
+
+    @PostMapping("/picking")
+    public ResponseEntity<Void> pickMaterial(
+            @AuthenticationPrincipal AuthenticatedUser user,
+            @Valid @RequestBody MaterialRequest request
+        ) {
+        supplyService.pickingClaimedMaterial(user.id(), request);
         return ResponseEntity.ok().build();
     }
 }
