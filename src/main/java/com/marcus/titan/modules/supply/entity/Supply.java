@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcus.titan.modules.supply.dto.message.MaterialResponseMessage;
 import com.marcus.titan.modules.supply.enums.SupplyStatus;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Supply {
         this.sku = sku;
         this.module = module;
         this.createdBy = userId;
-        this.movements = new SupplyMoving();
+        this.movements = new SupplyTracking();
         this.movements.setSupply(this);
     }
 
@@ -53,7 +52,7 @@ public class Supply {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "supply")
     @JsonManagedReference
-    private SupplyMoving movements;
+    private SupplyTracking movements;
 
     @CreationTimestamp
     private Instant createdAt;
@@ -73,6 +72,11 @@ public class Supply {
         }
         this.movements.setSolicitedAt(Instant.now());
         this.status = SupplyStatus.REQUESTED;
+    }
+
+    public void claim (Integer operatorId) {
+        this.status = SupplyStatus.CLAIMED;
+        this.movements.claim(operatorId);
     }
 
 
