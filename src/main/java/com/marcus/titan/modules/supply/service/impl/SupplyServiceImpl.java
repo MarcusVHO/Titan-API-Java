@@ -2,12 +2,17 @@ package com.marcus.titan.modules.supply.service.impl;
 
 import com.marcus.titan.modules.supply.dto.message.MaterialResponseMessage;
 import com.marcus.titan.modules.supply.dto.request.MaterialRequest;
+import com.marcus.titan.modules.supply.dto.response.SapResponse;
 import com.marcus.titan.modules.supply.entity.Supply;
 import com.marcus.titan.modules.supply.mapper.SupplyMapper;
 import com.marcus.titan.modules.supply.messaging.producer.SapProducer;
 import com.marcus.titan.modules.supply.repository.SupplyRepository;
 import com.marcus.titan.modules.supply.service.SupplyService;
+import org.hibernate.query.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SupplyServiceImpl implements SupplyService {
@@ -39,4 +44,11 @@ public class SupplyServiceImpl implements SupplyService {
         materialEntity.updateFromMaterialMessage(message);
 
     }
+
+    @Override
+    public List<SapResponse> getMaterials(Pageable pageable) {
+        return supplyRepository.findAll(pageable).stream().map(mapper::toSapResponse).toList();
+    }
+
+
 }
